@@ -16,11 +16,11 @@ class CustomerAdd extends Component {
   addCustomer = () => {
     const url = '/api/customers';
     const formData = new FormData();
-    formData.append('image', this.state.file)
-    formData.append('name', this.state.userName)
-    formData.append('birthday', this.state.birthday)
-    formData.append('gender', this.state.gender)
-    formData.append('job', this.state.job)
+    formData.append('image', this.state.file);
+    formData.append('name', this.state.userName);
+    formData.append('birthday', this.state.birthday);
+    formData.append('gender', this.state.gender);
+    formData.append('job', this.state.job);
     const config = {
       headers : {
         'content-type' :'multipart/form-data'
@@ -35,11 +35,21 @@ class CustomerAdd extends Component {
         .then(res => {
           console.log(res.data);
         });
+      
+    this.setState({
+      file: null,
+      userName: '',
+      birthday: '',
+      gender: '',
+      job: '',
+      fileName: ''
+    });
+    window.location.reload(); 
   }
 
   handleFileChange = (e) => {
     this.setState({
-      file : e.target.file[0],
+      file : e.target.files[0],
       fileName : e.target.value
     });
   }
