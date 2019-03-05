@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import { post } from "axois";
+import axios  from "axios";
 
 class CustomerAdd extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      file : null, 
-      userName : '',
-      birthday : '',
-      gender : '',
-      job : '',
-      fileName : ''
-    }
+  state = {
+    file: null,
+    userName: '',
+    birthday: '',
+    gender: '',
+    job: '',
+    fileName: ''
   }
   addCustomer = () => {
     const url = '/api/customers';
@@ -21,21 +18,23 @@ class CustomerAdd extends Component {
     formData.append('birthday', this.state.birthday);
     formData.append('gender', this.state.gender);
     formData.append('job', this.state.job);
+    
     const config = {
       headers : {
-        'content-type' :'multipart/form-data'
+        'Content-type' :'multipart/form-data'
       }
     }
-    return post(url, formData, config);
+    return axios.post(url, formData, config);
   }
 
   handleFormSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
     this.addCustomer()
-        .then(res => {
+        .then((res) => {
           console.log(res.data);
+        }).catch((e) => {
+          console.log(e);
         });
-      
     this.setState({
       file: null,
       userName: '',
@@ -44,7 +43,7 @@ class CustomerAdd extends Component {
       job: '',
       fileName: ''
     });
-    window.location.reload(); 
+    window.location.reload();     
   }
 
   handleFileChange = (e) => {
